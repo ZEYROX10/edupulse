@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,14 +19,14 @@
         <i class="fas fa-terminal"></i> Start Learning and Level Up
       </div>
     </header>
-    
+
     <main>
       <div class="sidebar">
         <div class="add-subject">
           <input type="text" id="new-subject-input" placeholder="New Subject...">
           <button id="add-subject-btn"><i class="fas fa-plus"></i></button>
         </div>
-        
+
         <div class="section-header">
           <h2>Courses</h2>
           <div class="view-toggle">
@@ -35,18 +34,18 @@
             <button><i class="fas fa-list"></i></button>
           </div>
         </div>
-        
+
         <div class="subjects-list" id="subjects-list">
           <!-- Subjects will be dynamically added here -->
         </div>
       </div>
-      
+
       <div class="content">
         <div class="subject-detail" id="subject-detail">
           <div class="welcome-message" id="welcome-message">
             <strong><i class="fas fa-info-circle"></i> Welcome!</strong> Select a subject or create a new one to get started.
           </div>
-          
+
           <div class="section-header">
             <h2 id="current-subject">Select a subject</h2>
             <div class="xp-level hidden" id="xp-level">
@@ -59,22 +58,22 @@
               </div>
             </div>
           </div>
-          
+
           <div class="nav-tabs hidden" id="subject-tabs">
             <button class="nav-tab active" id="topics-tab">Topics</button>
             <button class="nav-tab" id="calendar-tab">Calendar</button>
             <button class="nav-tab" id="analytics-tab">Analytics</button>
           </div>
-          
+
           <div class="add-topic hidden" id="add-topic-container">
             <input type="text" id="new-topic-input" placeholder="New Topic...">
             <button id="add-topic-btn"><i class="fas fa-plus"></i></button>
           </div>
-          
+
           <div class="topics-container" id="topics-container">
             <!-- Topics will be dynamically added here -->
           </div>
-          
+
           <div class="calendar-view hidden" id="calendar-view">
             <div class="calendar-header">
               <div class="calendar-title" id="calendar-title">March 2025</div>
@@ -84,12 +83,12 @@
                 <button id="next-month"><i class="fas fa-chevron-right"></i></button>
               </div>
             </div>
-            
+
             <div class="calendar-grid" id="calendar-grid">
               <!-- Calendar will be dynamically generated here -->
             </div>
           </div>
-          
+
           <div class="analytics-view hidden" id="analytics-view">
             <h3>Study Analytics</h3>
             <div class="chart-container">
@@ -97,18 +96,18 @@
             </div>
           </div>
         </div>
-        
+
         <div class="topic-detail hidden" id="topic-detail">
           <div class="topic-header">
             <button id="back-to-subject-btn"><i class="fas fa-arrow-left"></i></button>
             <h2 id="current-topic">Topic Name</h2>
           </div>
-          
+
           <div class="progress-container">
             <div class="chart-container">
               <canvas id="progress-chart"></canvas>
             </div>
-            
+
             <div class="track-progress">
               <h3>Track Your Progress</h3>
               <div class="progress-inputs">
@@ -130,6 +129,7 @@
                   </select>
                 </div>
                 <button id="add-progress-btn">Add Progress</button>
+                <button id="take-note-btn" class="note-btn"><i class="fas fa-sticky-note"></i> Take Note</button>
               </div>
             </div>
           </div>
@@ -137,7 +137,7 @@
       </div>
     </main>
   </div>
-  
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
 </body>
