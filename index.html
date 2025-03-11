@@ -1,16 +1,77 @@
-<!DOCTYPE html>
-<html>
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Study Tracker</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
-  Hello world
+  <div class="app-container">
+    <header>
+      <h1><i class="fas fa-brain"></i> AI Study Tracker</h1>
+    </header>
+    
+    <main>
+      <div class="sidebar">
+        <div class="add-subject">
+          <input type="text" id="new-subject-input" placeholder="New Subject...">
+          <button id="add-subject-btn"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="subjects-list" id="subjects-list">
+          <!-- Subjects will be dynamically added here -->
+        </div>
+      </div>
+      
+      <div class="content">
+        <div class="subject-detail" id="subject-detail">
+          <h2 id="current-subject">Select a subject</h2>
+          
+          <div class="add-topic hidden" id="add-topic-container">
+            <input type="text" id="new-topic-input" placeholder="New Topic...">
+            <button id="add-topic-btn"><i class="fas fa-plus"></i></button>
+          </div>
+          
+          <div class="topics-container" id="topics-container">
+            <!-- Topics will be dynamically added here -->
+          </div>
+        </div>
+        
+        <div class="topic-detail hidden" id="topic-detail">
+          <div class="topic-header">
+            <button id="back-to-subject-btn"><i class="fas fa-arrow-left"></i></button>
+            <h2 id="current-topic">Topic Name</h2>
+          </div>
+          
+          <div class="progress-container">
+            <div class="chart-container">
+              <canvas id="progress-chart"></canvas>
+            </div>
+            
+            <div class="track-progress">
+              <h3>Track Your Progress</h3>
+              <div class="progress-inputs">
+                <div class="input-group">
+                  <label for="x-value">X Value (Date):</label>
+                  <input type="date" id="x-value">
+                </div>
+                <div class="input-group">
+                  <label for="y-value">Y Value (Hours):</label>
+                  <input type="number" id="y-value" min="0" step="0.5">
+                </div>
+                <button id="add-progress-btn">Add Progress</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
 </body>
-
 </html>
