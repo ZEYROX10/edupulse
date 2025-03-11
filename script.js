@@ -5,8 +5,7 @@ const state = {
   currentSubject: null,
   currentTopic: null,
   currentView: 'topics', // topics, calendar, analytics
-  currentDate: new Date(),
-  isSummarizing: false
+  currentDate: new Date()
 };
 
 // Cover images for subjects (randomly assigned)
@@ -61,11 +60,6 @@ function loadData() {
           topic.type = ['study', 'assignment', 'exam', 'practice'][Math.floor(Math.random() * 4)];
         }
         
-        // Initialize notes if they don't exist
-        if (!topic.notes) {
-          topic.notes = '';
-        }
-        
         // Convert old format to new if necessary
         if (topic.progressData) {
           topic.progressData.forEach(point => {
@@ -118,11 +112,6 @@ const prevMonthBtn = document.getElementById('prev-month');
 const nextMonthBtn = document.getElementById('next-month');
 const todayBtn = document.getElementById('today-btn');
 const analyticsViewEl = document.getElementById('analytics-view');
-const noteEditorEl = document.getElementById('note-editor');
-const saveNoteBtn = document.getElementById('save-note-btn');
-const summarizeNoteBtn = document.getElementById('summarize-note-btn');
-const aiSummaryEl = document.getElementById('ai-summary');
-const summaryContentEl = document.getElementById('summary-content');
 
 // Set today's date as default for date input
 xValueInput.valueAsDate = new Date();
@@ -374,82 +363,7 @@ function selectTopic(topicId) {
   // Set default progress type
   progressTypeInput.value = state.currentTopic.type || 'study';
   
-  // Load notes if they exist
-  noteEditorEl.value = state.currentTopic.notes || '';
-  
-  // Hide AI summary when changing topics
-  aiSummaryEl.classList.remove('visible');
-  
   renderProgressChart();
-}
-
-// Save note for the current topic
-function saveNote() {
-  if (!state.currentTopic) return;
-  
-  state.currentTopic.notes = noteEditorEl.value;
-  saveData();
-  
-  // Show a quick flash of color to indicate saving
-  noteEditorEl.style.borderColor = var(--accent-color);
-  setTimeout(() => {
-    noteEditorEl.style.borderColor = '';
-  }, 500);
-}
-
-// Simulate AI summary generation
-async function summarizeNotes() {
-  if (!state.currentTopic || !state.currentTopic.notes || state.isSummarizing) return;
-  
-  // Save current notes first
-  saveNote();
-  
-  // Show loading state
-  state.isSummarizing = true;
-  summarizeNoteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-  aiSummaryEl.classList.remove('visible');
-  
-  try {
-    // Simulate AI processing delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Generate a simulated summary
-    const notes = state.currentTopic.notes;
-    let summary;
-    
-    if (!notes.trim()) {
-      summary = "No notes to summarize. Add some notes and try again.";
-    } else {
-      // Simple algorithm to extract important sentences
-      const sentences = notes.split(/[.!?]+/).filter(s => s.trim().length > 10);
-      
-      if (sentences.length <= 2) {
-        summary = notes;
-      } else {
-        // Take first sentence, a middle one, and the last one to simulate a summary
-        const firstSentence = sentences[0].trim();
-        const middleSentence = sentences[Math.floor(sentences.length / 2)].trim();
-        const lastSentence = sentences[sentences.length - 1].trim();
-        
-        summary = `${firstSentence}. ${middleSentence}. ${lastSentence}.`;
-        
-        // Add a conclusion
-        summary += `\n\nThis topic contains ${sentences.length} key points related to ${state.currentTopic.name}.`;
-      }
-    }
-    
-    // Display the summary
-    summaryContentEl.textContent = summary;
-    aiSummaryEl.classList.add('visible');
-  } catch (error) {
-    console.error('Error generating summary:', error);
-    summaryContentEl.textContent = "Sorry, there was an error generating the summary. Please try again.";
-    aiSummaryEl.classList.add('visible');
-  } finally {
-    // Reset button state
-    state.isSummarizing = false;
-    summarizeNoteBtn.innerHTML = '<i class="fas fa-robot"></i> Summarize with AI';
-  }
 }
 
 // Delete topic
@@ -844,17 +758,6 @@ nextMonthBtn.addEventListener('click', () => {
 todayBtn.addEventListener('click', () => {
   state.currentDate = new Date();
   updateCalendarView();
-});
-
-// Note saving and summarization
-saveNoteBtn.addEventListener('click', saveNote);
-summarizeNoteBtn.addEventListener('click', summarizeNotes);
-
-// Auto-save notes when typing stops
-let noteTypingTimer;
-noteEditorEl.addEventListener('input', () => {
-  clearTimeout(noteTypingTimer);
-  noteTypingTimer = setTimeout(saveNote, 1000);
 });
 
 // Initialize app
