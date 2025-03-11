@@ -147,12 +147,20 @@ newSubjectInput.addEventListener('keydown', (e) => {
 // Render subjects list
 function renderSubjects() {
   subjectsList.innerHTML = '';
-  state.subjects.forEach(subject => {
+  state.subjects.forEach((subject, index) => {
     const subjectEl = document.createElement('div');
     subjectEl.className = 'subject-item';
     if (state.currentSubject && state.currentSubject.id === subject.id) {
       subjectEl.classList.add('active');
     }
+    
+    // Assign a color property to the subject if it doesn't have one
+    if (!subject.colorIndex) {
+      subject.colorIndex = (index % 10) + 1;
+    }
+    
+    // Store the color variable name to use in topic cards
+    subject.colorVar = `--subject-color-${subject.colorIndex}`;
     
     const subjectNameEl = document.createElement('span');
     subjectNameEl.textContent = subject.name;
@@ -174,6 +182,8 @@ function renderSubjects() {
     
     subjectsList.appendChild(subjectEl);
   });
+  
+  saveData();
 }
 
 // Select a subject
@@ -286,6 +296,9 @@ function renderTopics() {
   topicsContainer.innerHTML = '';
   if (!state.currentSubject) return;
   
+  // Get the subject's color variable
+  const subjectColor = `var(${state.currentSubject.colorVar || '--primary-color'})`;
+  
   state.currentSubject.topics.forEach(topic => {
     const topicEl = document.createElement('div');
     topicEl.className = 'topic-card';
@@ -301,7 +314,7 @@ function renderTopics() {
     
     topicEl.innerHTML = `
       <div class="topic-cover" style="background-image: url('${coverImage}')">
-        <div class="topic-badge">${topic.type}</div>
+        <div class="topic-badge" style="background-color: ${subjectColor}">${topic.type}</div>
         <div class="topic-controls">
           <button class="delete-topic-btn" data-id="${topic.id}"><i class="fas fa-trash"></i></button>
         </div>
@@ -313,7 +326,7 @@ function renderTopics() {
           <span class="topic-status ${status}">${status}</span>
         </div>
         <div class="topic-progress">
-          <div class="topic-progress-bar" style="width: ${Math.min(topic.xp / 10, 100)}%"></div>
+          <div class="topic-progress-bar" style="width: ${Math.min(topic.xp / 10, 100)}%; background-color: ${subjectColor}"></div>
         </div>
       </div>
     `;
