@@ -1,13 +1,15 @@
 
 :root {
-  --primary-color: #6c5ce7;
-  --secondary-color: #a29bfe;
+  --primary-color: #3498db;
+  --secondary-color: #9b59b6;
   --accent-color: #fd79a8;
-  --background-color: #f8f9fa;
-  --card-background: #ffffff;
-  --text-color: #2d3436;
+  --background-color: #1a1a1a;
+  --card-background: #2d2d2d;
+  --light-card-background: #333333;
+  --text-color: #ecf0f1;
+  --muted-text: #95a5a6;
   --border-radius: 10px;
-  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   --transition: all 0.3s ease;
 }
 
@@ -32,11 +34,11 @@ html, body {
 }
 
 header {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background-color: #1a1a1a;
   color: white;
   padding: 1.5rem;
-  text-align: center;
-  box-shadow: var(--box-shadow);
+  text-align: left;
+  border-bottom: 1px solid #333;
 }
 
 header h1 {
@@ -44,8 +46,18 @@ header h1 {
   font-weight: 700;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
+  color: var(--text-color);
+}
+
+.command-input {
+  background-color: #2d2d2d;
+  border-radius: var(--border-radius);
+  padding: 0.8rem 1rem;
+  margin: 0.5rem 0 1rem;
+  color: var(--muted-text);
+  font-family: monospace;
+  border-left: 3px solid var(--primary-color);
 }
 
 main {
@@ -55,11 +67,11 @@ main {
 
 .sidebar {
   width: 300px;
-  background-color: var(--card-background);
-  box-shadow: var(--box-shadow);
+  background-color: #222;
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  border-right: 1px solid #333;
 }
 
 .add-subject {
@@ -70,7 +82,9 @@ main {
 .add-subject input {
   flex: 1;
   padding: 0.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid #444;
+  background-color: #333;
+  color: var(--text-color);
   border-radius: var(--border-radius) 0 0 var(--border-radius);
   outline: none;
 }
@@ -89,6 +103,42 @@ main {
   background-color: var(--secondary-color);
 }
 
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #444;
+}
+
+.section-header h2 {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin-right: auto;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.view-toggle button {
+  background-color: #333;
+  border: none;
+  color: var(--text-color);
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.view-toggle button.active {
+  background-color: var(--primary-color);
+}
+
 .subjects-list {
   flex: 1;
   overflow-y: auto;
@@ -97,7 +147,7 @@ main {
 .subject-item {
   padding: 0.75rem;
   margin-bottom: 0.5rem;
-  background-color: #f1f1f1;
+  background-color: #333;
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: var(--transition);
@@ -107,12 +157,12 @@ main {
 }
 
 .subject-item:hover {
-  background-color: #e9e9e9;
+  background-color: #444;
   transform: translateY(-2px);
 }
 
 .subject-item.active {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   color: white;
 }
 
@@ -150,45 +200,117 @@ main {
 .add-topic input {
   flex: 1;
   padding: 0.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid #444;
+  background-color: #333;
+  color: var(--text-color);
   border-radius: var(--border-radius) 0 0 var(--border-radius);
   outline: none;
 }
 
 .topics-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
   margin-top: 1rem;
 }
 
 .topic-card {
-  background-color: #f9f9f9;
+  background-color: var(--light-card-background);
   border-radius: var(--border-radius);
-  padding: 1rem;
+  overflow: hidden;
   cursor: pointer;
   transition: var(--transition);
-  border-left: 4px solid var(--accent-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  box-shadow: var(--box-shadow);
+  position: relative;
+  height: 200px;
 }
 
 .topic-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--box-shadow);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-.topic-card button {
-  background: transparent;
+.topic-cover {
+  height: 130px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.topic-content {
+  padding: 1rem;
+  position: relative;
+}
+
+.topic-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.topic-type {
+  font-size: 0.75rem;
+  color: var(--muted-text);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.topic-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #444;
+}
+
+.topic-progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.topic-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+}
+
+.topic-controls {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.topic-card:hover .topic-controls {
+  opacity: 1;
+}
+
+.topic-controls button {
+  background: rgba(0, 0, 0, 0.7);
   border: none;
-  color: #888;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: var(--transition);
 }
 
-.topic-card button:hover {
-  color: #ff6b6b;
+.topic-controls button:hover {
+  background: rgba(255, 0, 0, 0.7);
 }
 
 .topic-detail {
@@ -223,6 +345,96 @@ main {
   background-color: var(--secondary-color);
 }
 
+.calendar-view {
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.calendar-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-nav button {
+  background-color: #333;
+  border: none;
+  color: var(--text-color);
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.calendar-nav button:hover {
+  background-color: #444;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+
+.calendar-day-header {
+  text-align: center;
+  font-weight: 600;
+  padding: 0.5rem;
+  color: var(--muted-text);
+}
+
+.calendar-day {
+  background-color: #333;
+  border-radius: 5px;
+  padding: 0.5rem;
+  min-height: 100px;
+  position: relative;
+}
+
+.calendar-day.today {
+  border: 1px solid var(--primary-color);
+}
+
+.calendar-day-number {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.calendar-event {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 3px;
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.calendar-event.exam {
+  background-color: var(--accent-color);
+}
+
+.calendar-event.assignment {
+  background-color: var(--secondary-color);
+}
+
 .progress-container {
   display: flex;
   flex-direction: column;
@@ -232,13 +444,13 @@ main {
 .chart-container {
   height: 300px;
   width: 100%;
-  background-color: #f9f9f9;
+  background-color: var(--light-card-background);
   border-radius: var(--border-radius);
   padding: 1rem;
 }
 
 .track-progress {
-  background-color: #f9f9f9;
+  background-color: var(--light-card-background);
   border-radius: var(--border-radius);
   padding: 1.5rem;
 }
@@ -262,12 +474,14 @@ main {
 
 .input-group label {
   font-size: 0.875rem;
-  color: #555;
+  color: var(--muted-text);
 }
 
-.input-group input {
+.input-group input, .input-group select {
   padding: 0.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid #444;
+  background-color: #333;
+  color: var(--text-color);
   border-radius: var(--border-radius);
   outline: none;
 }
@@ -287,6 +501,94 @@ main {
   background-color: var(--secondary-color);
 }
 
+.nav-tabs {
+  display: flex;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #444;
+}
+
+.nav-tab {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--muted-text);
+  font-size: 0.9rem;
+  transition: var(--transition);
+  border-bottom: 2px solid transparent;
+}
+
+.nav-tab.active {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.xp-level {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.xp-badge {
+  background-color: var(--primary-color);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.xp-info {
+  flex: 1;
+}
+
+.xp-progress {
+  width: 100%;
+  height: 8px;
+  background-color: #444;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.25rem;
+}
+
+.xp-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.welcome-message {
+  background-color: var(--light-card-background);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-left: 3px solid var(--primary-color);
+}
+
+.topic-status {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  margin-top: 0.5rem;
+  background-color: #555;
+}
+
+.topic-status.rookie {
+  background-color: #f39c12;
+}
+
+.topic-status.master {
+  background-color: #2ecc71;
+}
+
+.topic-status.expert {
+  background-color: #9b59b6;
+}
+
 .hidden {
   display: none;
 }
@@ -302,5 +604,9 @@ main {
   
   .progress-container {
     flex-direction: column;
+  }
+  
+  .calendar-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
