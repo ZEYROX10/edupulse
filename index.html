@@ -142,3 +142,22 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+  <!-- Note Modal -->
+  <div class="note-modal" id="note-modal">
+    <div class="note-modal-content">
+      <div class="note-modal-header">
+        <h3>Notes for <span id="note-topic-name">Topic</span></h3>
+        <button id="close-note-modal" class="note-modal-close">&times;</button>
+      </div>
+      <textarea id="note-textarea" class="note-textarea" placeholder="Write your notes here..."></textarea>
+      <div class="note-actions">
+        <button id="save-note-btn" class="save-note-btn"><i class="fas fa-save"></i> Save Notes</button>
+        <button id="summarize-note-btn" class="summarize-note-btn"><i class="fas fa-robot"></i> Summarize with AI</button>
+      </div>
+      <div class="summary-result" id="summary-result">
+        <h4>AI Summary</h4>
+        <div id="summary-content"></div>
+      </div>
+    </div>
+  </div>

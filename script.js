@@ -773,6 +773,12 @@ todayBtn.addEventListener('click', () => {
 // Note functionality
 takeNoteBtn.addEventListener('click', () => {
   if (state.currentTopic) {
+    const noteTopicNameEl = document.getElementById('note-topic-name');
+    const noteModal = document.getElementById('note-modal');
+    const noteTextarea = document.getElementById('note-textarea');
+    const summaryResult = document.getElementById('summary-result');
+    const summaryContent = document.getElementById('summary-content');
+    
     noteTopicNameEl.textContent = state.currentTopic.name;
     
     // Load existing note if available
@@ -791,74 +797,87 @@ takeNoteBtn.addEventListener('click', () => {
   }
 });
 
-closeNoteModalBtn.addEventListener('click', () => {
-  noteModal.classList.remove('active');
-});
-
-// Close modal when clicking outside content
-noteModal.addEventListener('click', (e) => {
-  if (e.target === noteModal) {
-    noteModal.classList.remove('active');
-  }
-});
-
-saveNoteBtn.addEventListener('click', () => {
-  const noteText = noteTextarea.value.trim();
+document.addEventListener('DOMContentLoaded', () => {
+  const closeNoteModalBtn = document.getElementById('close-note-modal');
+  const noteModal = document.getElementById('note-modal');
+  const saveNoteBtn = document.getElementById('save-note-btn');
+  const summarizeNoteBtn = document.getElementById('summarize-note-btn');
+  const noteTextarea = document.getElementById('note-textarea');
+  const summaryResult = document.getElementById('summary-result');
   
-  if (noteText && state.currentTopic) {
-    // Initialize notes array if it doesn't exist
-    if (!state.currentTopic.notes) {
-      state.currentTopic.notes = [];
-    }
-    
-    // Add the note
-    state.currentTopic.notes.push({
-      id: Date.now().toString(),
-      content: noteText,
-      date: new Date().toISOString(),
-      summary: ''
+  if (closeNoteModalBtn) {
+    closeNoteModalBtn.addEventListener('click', () => {
+      noteModal.classList.remove('active');
     });
-    
-    // Award XP for taking notes (optional feature)
-    state.currentTopic.xp += 5;
-    updateSubjectXp();
-    
-    // Save data
-    saveData();
-    
-    // Show feedback
-    alert('Note saved successfully!');
-  }
-});
-
-summarizeNoteBtn.addEventListener('click', () => {
-  const noteText = noteTextarea.value.trim();
-  
-  if (!noteText) {
-    alert('Please write some notes first!');
-    return;
   }
   
-  // Show loading state
-  summarizeNoteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Summarizing...';
-  summarizeNoteBtn.disabled = true;
+  // Close modal when clicking outside content
+  if (noteModal) {
+    noteModal.addEventListener('click', (e) => {
+      if (e.target === noteModal) {
+        noteModal.classList.remove('active');
+      }
+    });
+  }
   
-  // Open a new tab/window with ChatGPT prompt
-  const prompt = encodeURIComponent(`Could you please summarize these notes in bullet points highlighting the key concepts and important information:\n\n${noteText}`);
-  const chatGptUrl = `https://chat.openai.com/g/g-OF5ZvqQrp-summizer/c/?q=${prompt}`;
+  if (saveNoteBtn) {
+    saveNoteBtn.addEventListener('click', () => {
+      const noteText = noteTextarea.value.trim();
+      
+      if (noteText && state.currentTopic) {
+        // Initialize notes array if it doesn't exist
+        if (!state.currentTopic.notes) {
+          state.currentTopic.notes = [];
+        }
+        
+        // Add the note
+        state.currentTopic.notes.push({
+          id: Date.now().toString(),
+          content: noteText,
+          date: new Date().toISOString(),
+          summary: ''
+        });
+        
+        // Award XP for taking notes (optional feature)
+        state.currentTopic.xp += 5;
+        updateSubjectXp();
+        
+        // Save data
+        saveData();
+        
+        // Show feedback
+        alert('Note saved successfully!');
+      }
+    });
+  }
   
-  // Open ChatGPT in a new tab
-  window.open(chatGptUrl, '_blank');
-  
-  // Reset button state
-  setTimeout(() => {
-    summarizeNoteBtn.innerHTML = '<i class="fas fa-robot"></i> Summarize with AI';
-    summarizeNoteBtn.disabled = false;
-  }, 2000);
-  
-  // Note: In a real implementation, we might use the OpenAI API directly
-  // to get a summary and then display it in the modal, but for simplicity,
-  // we're redirecting to ChatGPT
+  if (summarizeNoteBtn) {
+    summarizeNoteBtn.addEventListener('click', () => {
+      const noteText = noteTextarea.value.trim();
+      
+      if (!noteText) {
+        alert('Please write some notes first!');
+        return;
+      }
+      
+      // Show loading state
+      summarizeNoteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Summarizing...';
+      summarizeNoteBtn.disabled = true;
+      
+      // Open a new tab/window with ChatGPT prompt
+      const prompt = encodeURIComponent(`Could you please summarize these notes in bullet points highlighting the key concepts and important information:\n\n${noteText}`);
+      const chatGptUrl = `https://chat.openai.com/g/g-OF5ZvqQrp-summizer/c/?q=${prompt}`;
+      
+      // Open ChatGPT in a new tab
+      window.open(chatGptUrl, '_blank');
+      
+      // Reset button state
+      setTimeout(() => {
+        summarizeNoteBtn.innerHTML = '<i class="fas fa-robot"></i> Summarize with AI';
+        summarizeNoteBtn.disabled = false;
+      }, 2000);
+    });
+  }
 });
 
 // Initialize app
