@@ -866,7 +866,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Open a new tab/window with ChatGPT prompt
       const prompt = encodeURIComponent(`Could you please summarize these notes in bullet points highlighting the key concepts and important information:\n\n${noteText}`);
-      const chatGptUrl = `https://chat.openai.com/g/g-OF5ZvqQrp-summizer/c/?q=${prompt}`;
+      const chatGptUrl = `https://chat.openai.com/chat?q=${prompt}`;
       
       // Open ChatGPT in a new tab
       window.open(chatGptUrl, '_blank');
