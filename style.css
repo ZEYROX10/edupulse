@@ -16,7 +16,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 html, body {
@@ -43,10 +43,12 @@ header {
 header h1 {
   font-size: 2rem;
   font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
   display: flex;
   align-items: center;
   gap: 10px;
   color: var(--text-color);
+  letter-spacing: 0.5px;
 }
 
 .command-input {
@@ -112,8 +114,11 @@ main {
 
 .section-header h2 {
   font-size: 1.2rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   color: var(--text-color);
   margin-right: auto;
+  letter-spacing: 0.3px;
 }
 
 .view-toggle {
